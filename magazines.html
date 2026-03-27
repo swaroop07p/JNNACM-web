@@ -17,6 +17,21 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* This is the most important line */
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            /* Prevents horizontal scrolling */
+            position: relative;
+        }
+
         /* =========================================
            CSS VARIABLES & THEME SETUP
            ========================================= */
@@ -901,9 +916,17 @@
             color: #666;
             margin-top: 5px;
         }
+
         @media (max-width: 768px) {
-            .footer-copyright{
+            .footer-copyright {
                 font-size: 11px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-box {
+                width: 95px;
+                height: 50px;
             }
         }
     </style>
