@@ -694,6 +694,42 @@
                 padding-inline: 40px;
             }
         }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+            /* Stacks links row and text vertically */
+            align-items: center;
+            /* Centers everything */
+            gap: 10px;
+            /* Space between icons and text */
+            font-family: sans-serif;
+        }
+
+        .social-links-row {
+            display: flex;
+            /* Keeps icons in a single horizontal line */
+            gap: 20px;
+            /* Space between each icon */
+        }
+
+        .social-links-row a {
+            color: inherit;
+            /* Takes color from parent or remains default */
+            text-decoration: none;
+        }
+
+        .designer-tag {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-copyright {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
@@ -814,18 +850,32 @@
         <div class="footer-content">
             <div class="footer-text">
                 <h3>JNNCE ACM Student Chapter</h3>
-                <p>&copy; <span id="year"></span> All rights reserved.</p>
+                <h4 style="padding-top: 5px; text-align: center;">
+                    Visitors: <span id="visitor-count">Loading...</span>
+                    <span style="font-size: 0.8em; color: gray;">
+                        (Unique: <span id="unique-count">0</span>)
+                    </span>
+                </h4>
             </div>
 
+            <p class="footer-copyright">&copy; <span id="year"></span> Copyright JNNCE ACM Student Chapter. All Rights
+                Reserved</p>
+
             <div class="footer-social">
-                <a href="https://jnnce.ac.in/jnndemo/" class="soc-globe"><i class="fa-solid fa-globe fa-lg"></i></a>
-                <a href="https://www.instagram.com/jnnce.aiml/" class="soc-insta"><i
-                        class="fa-brands fa-instagram fa-lg"></i></a>
-                <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
-                    class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
-                        class="fa-brands fa-twitter fa-lg"></i></a>
+                <div class="social-links-row">
+                    <a href="https://jnnce.ac.in/jnndemo/" class="soc-globe"><i class="fa-solid fa-globe fa-lg"></i></a>
+                    <a href="https://www.instagram.com/jnnce.aiml/" class="soc-insta"><i
+                            class="fa-brands fa-instagram fa-lg"></i></a>
+                    <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
+                        class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
+                            class="fa-brands fa-twitter fa-lg"></i></a>
+                </div>
+                <div class="designer-tag">
+                    Designed by JNNACM
+                </div>
             </div>
+
         </div>
     </footer>
 
@@ -879,6 +929,70 @@
                 mobileMenu.classList.remove('is-open');
             }
         });
+    </script>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // 🔥 Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4IjdT99WRqmXacG5HTOw8W5h-uz1fsA0",
+            authDomain: "jnnacm-web.firebaseapp.com",
+            projectId: "jnnacm-web",
+            storageBucket: "jnnacm-web.firebasestorage.app",
+            messagingSenderId: "711067975206",
+            appId: "1:711067975206:web:3c1f2da7169ba35618b0e7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const counterRef = doc(db, "stats", "visitors");
+
+        async function updateVisitorCount() {
+            try {
+
+                // 🔹 ALWAYS increment total visits
+                await updateDoc(counterRef, {
+                    count: increment(1)
+                });
+
+                // 🔹 CHECK if user already counted
+                let isUnique = localStorage.getItem("visited");
+
+                if (!isUnique) {
+                    // First time visitor → increment unique
+                    await updateDoc(counterRef, {
+                        unique: increment(1)
+                    });
+
+                    localStorage.setItem("visited", "true");
+                }
+
+                // 🔹 GET updated values
+                const docSnap = await getDoc(counterRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+
+                    document.getElementById("visitor-count").innerText = data.count;
+
+                    // OPTIONAL UNIQUE DISPLAY
+                    const uniqueEl = document.getElementById("unique-count");
+                    if (uniqueEl) {
+                        uniqueEl.innerText = data.unique;
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        updateVisitorCount();
+
     </script>
 </body>
 

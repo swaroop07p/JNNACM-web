@@ -874,6 +874,41 @@
             background-clip: text;
             color: transparent;
         }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+            /* Stacks links row and text vertically */
+            align-items: center;
+            /* Centers everything */
+            gap: 10px;
+            /* Space between icons and text */
+            font-family: sans-serif;
+        }
+
+        .social-links-row {
+            display: flex;
+            /* Keeps icons in a single horizontal line */
+            gap: 20px;
+            /* Space between each icon */
+        }
+
+        .social-links-row a {
+            color: inherit;
+            /* Takes color from parent or remains default */
+            text-decoration: none;
+        }
+
+        .designer-tag {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        @media (max-width: 768px) {
+            .footer-copyright{
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
@@ -1131,7 +1166,8 @@
                     <div class="event-info">
                         <h2 class="event-title text-gradient-hero">AIML Mind Arena 2026</h2>
                         <p class="event-date">22 March 2026</p>
-                        <p class="desc">An exciting online challenge platform to test your Reflexes | Memory | Focus |   Logic<br>
+                        <p class="desc">An exciting online challenge platform to test your Reflexes | Memory | Focus |
+                            Logic<br>
                             Event Highlights:
                             Pure skill-based competition,
                             Speed + accuracy decide your score,
@@ -1328,18 +1364,32 @@
         <div class="footer-content">
             <div class="footer-text">
                 <h3>JNNCE ACM Student Chapter</h3>
-                <p>&copy; <span id="year"></span> All rights reserved.</p>
+                <h4 style="padding-top: 5px; text-align: center;">
+                    Visitors: <span id="visitor-count">Loading...</span>
+                    <span style="font-size: 0.8em; color: gray;">
+                        (Unique: <span id="unique-count">0</span>)
+                    </span>
+                </h4>
             </div>
 
+            <p class="footer-copyright">&copy; <span id="year"></span> Copyright JNNCE ACM Student Chapter. All Rights
+                Reserved</p>
+
             <div class="footer-social">
-                <a href="https://jnnce.ac.in/jnndemo/" class="soc-globe"><i class="fa-solid fa-globe fa-lg"></i></a>
-                <a href="https://www.instagram.com/jnnce.aiml/" class="soc-insta"><i
-                        class="fa-brands fa-instagram fa-lg"></i></a>
-                <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
-                    class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
-                        class="fa-brands fa-twitter fa-lg"></i></a>
+                <div class="social-links-row">
+                    <a href="https://jnnce.ac.in/jnndemo/" class="soc-globe"><i class="fa-solid fa-globe fa-lg"></i></a>
+                    <a href="https://www.instagram.com/jnnce.aiml/" class="soc-insta"><i
+                            class="fa-brands fa-instagram fa-lg"></i></a>
+                    <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
+                        class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
+                            class="fa-brands fa-twitter fa-lg"></i></a>
+                </div>
+                <div class="designer-tag">
+                    Designed by JNNACM
+                </div>
             </div>
+
         </div>
     </footer>
 
@@ -1422,6 +1472,7 @@
             });
         }); 
     </script>
+    <script type="module" src="counter-display.js"></script>
 </body>
 
 </html>
