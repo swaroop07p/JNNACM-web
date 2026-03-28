@@ -1184,6 +1184,18 @@
                 height: 50px;
             }
         }
+
+        img {
+            /* Tells the browser to use the GPU for these images */
+            will-change: transform;
+            /* Prevents the image from "flickering" during scroll */
+            backface-visibility: hidden;
+        }
+
+        a,
+        button,.like-container {
+            -webkit-tap-highlight-color: transparent;
+        }
     </style>
 </head>
 
@@ -1194,8 +1206,8 @@
     <div class="navbar-wrapper">
         <nav>
             <a href="index.html" class="logo-box logo-box-mobile">
-                <img src="/assets/images/Home/ACMLOGO.png" alt="ACM Logo Light" class="logo-light">
-                <img src="/assets/images/Home/ACMLOGO1.png" alt="ACM Logo Dark" class="logo-dark">
+                <img src="/assets/images/Home/ACMLOGO.png" alt="ACM Logo Light" class="logo-light" loading="lazy">
+                <img src="/assets/images/Home/ACMLOGO1.png" alt="ACM Logo Dark" class="logo-dark" loading="lazy">
             </a>
 
             <ul class="nav-links">
@@ -1297,7 +1309,7 @@
                 <div class="hero-overlay"></div>
 
                 <div class="hero-logo-box glass-card navbar-glow hero-text">
-                    <img src="/assets/images/Home/AIMLLOGO.png" alt="AIML Logo">
+                    <img src="/assets/images/Home/AIMLLOGO.png" alt="AIML Logo" loading="lazy">
                 </div>
 
                 <h1 class="text-gradient-hero hero-title hero-text">
@@ -1327,7 +1339,7 @@
                     </p>
                 </div>
                 <div class="info-image-box" style="background: #020617;">
-                    <img src="/assets/images/Home/falcon logo.jpeg" alt="About Us">
+                    <img src="/assets/images/Home/falcon logo.jpeg" alt="About Us" loading="lazy">
                 </div>
             </div>
         </section>
@@ -1360,7 +1372,7 @@
                     </div>
                 </div>
                 <div class="info-image-box cover">
-                    <img src="/assets/images/Home/AIimage.jpg" alt="Vision and Mission">
+                    <img src="/assets/images/Home/AIimage.jpg" alt="Vision and Mission" loading="lazy">
                 </div>
             </div>
         </section>
@@ -1376,7 +1388,7 @@
                 <div class="glass-card event-card">
                     <div class="event-poster">
                         <img src="/assets/images/Events/Cricket/WhatsApp Image 2026-03-26 at 5.37.45 PM (1).jpeg"
-                            alt="Cricket">
+                            alt="Cricket" loading="lazy">
                         <div class="event-poster-overlay"></div>
                     </div>
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
@@ -1392,7 +1404,7 @@
                 <div class="glass-card event-card">
                     <div class="event-poster">
                         <img src="/assets/images/Events/Volleyball/WhatsApp Image 2026-03-26 at 5.37.46 PM.jpeg"
-                            alt="Volleyball">
+                            alt="Volleyball" loading="lazy">
                         <div class="event-poster-overlay"></div>
                     </div>
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
@@ -1410,7 +1422,7 @@
                 <div class="glass-card event-card">
                     <div class="event-poster">
                         <img src="/assets/images/Events/Batminton/WhatsApp Image 2026-03-26 at 5.37.46 PM (1).jpeg"
-                            alt="Batminton">
+                            alt="Batminton" loading="lazy">
                         <div class="event-poster-overlay"></div>
                     </div>
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
@@ -1429,7 +1441,7 @@
                 <div class="glass-card event-card">
                     <div class="event-poster">
                         <img src="/assets/images/Events/Throwball/WhatsApp Image 2026-03-26 at 5.37.45 PM (2).jpeg"
-                            alt="Throwball">
+                            alt="Throwball" loading="lazy">
                         <div class="event-poster-overlay"></div>
                     </div>
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
@@ -1478,7 +1490,8 @@
                             class="fa-brands fa-instagram fa-lg"></i></a>
                     <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
                         class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i class="ri-twitter-x-line ri-lg"></i></a>
+                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
+                            class="ri-twitter-x-line ri-lg"></i></a>
                 </div>
                 <div class="designer-tag" style="display: flex; align-items: center;">
                     Designed by <a href="http://jnnce.ac.in/jnndemo/depaiml.html" target="_blank"
