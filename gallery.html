@@ -939,6 +939,33 @@
                 height: 50px;
             }
         }
+
+        /* LIKE BUTTON */
+        .like-box {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 6px 10px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: white;
+            font-size: 14px;
+            z-index: 5;
+        }
+
+        .like-btn {
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.3s;
+        }
+
+        .like-btn.liked {
+            color: #ff3040;
+            transform: scale(1.2);
+        }
     </style>
 </head>
 
@@ -1061,39 +1088,74 @@
 
             <div class="gallery-grid" id="gallery-grid">
 
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
-                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.25_PM_2_tgzkkt.jpg"
-                        alt="Falcon Inauguration 2025">
-                </div>
-
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
-                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.26_PM_2_jt3nsr.jpg"
-                        alt="Falcon Inauguration 2025">
-                </div>
-
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
-                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.26_PM_1_rtxdxo.jpg"
-                        alt="Falcon Inauguration 2025">
-                </div>
-
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
-                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105179/WhatsApp_Image_2026-03-21_at_8.20.25_PM_1_w2d6ph.jpg"
-                        alt="Falcon Inauguration 2025">
-                </div>
-
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img1">
                     <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105181/WhatsApp_Image_2026-03-21_at_8.20.26_PM_3_z36g78.jpg"
                         alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
                 </div>
 
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img2">
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.26_PM_1_rtxdxo.jpg"
+                        alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img3">
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.26_PM_2_jt3nsr.jpg"
+                        alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img4">
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.25_PM_2_tgzkkt.jpg"
+                        alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img5">
                     <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105180/WhatsApp_Image_2026-03-21_at_8.20.25_PM_u17jkj.jpg"
                         alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
                 </div>
 
-                <div class="gallery-item" data-event="Falcon Inauguration 2025">
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img6">
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105179/WhatsApp_Image_2026-03-21_at_8.20.25_PM_1_w2d6ph.jpg"
+                        alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-event="Falcon Inauguration 2025" data-id="img7">
                     <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1774105181/WhatsApp_Image_2026-03-21_at_8.20.26_PM_unlpn1.jpg"
-                        alt="Tech Symposium">
+                        alt="Hackathon 2026">
+
+                    <div class="like-box">
+                        <i class="fa-regular fa-heart like-btn"></i>
+                        <span class="like-count">0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1133,7 +1195,8 @@
                             class="fa-brands fa-instagram fa-lg"></i></a>
                     <a href="https://www.linkedin.com/posts/jnnce-acm_jnnce-jnnceaiml-falconaiml-activity-7028016541375827968-Ko31"
                         class="soc-linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i class="ri-twitter-x-line ri-lg"></i></a>
+                    <a href="https://x.com/hashtag/jnnce?src=hashtag_click" class="soc-twitter"><i
+                            class="ri-twitter-x-line ri-lg"></i></a>
                 </div>
                 <div class="designer-tag" style="display: flex; align-items: center;">
                     Designed by <a href="http://jnnce.ac.in/jnndemo/depaiml.html" target="_blank"
@@ -1289,6 +1352,88 @@
         });
     </script>
     <script type="module" src="counter-display.js"></script>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4IjdT99WRqmXacG5HTOw8W5h-uz1fsA0",
+            authDomain: "jnnacm-web.firebaseapp.com",
+            projectId: "jnnacm-web",
+            storageBucket: "jnnacm-web.firebasestorage.app",
+            messagingSenderId: "711067975206",
+            appId: "1:711067975206:web:3c1f2da7169ba35618b0e7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 🔥 MAIN LOGIC
+        document.querySelectorAll(".gallery-item").forEach(item => {
+
+            const id = item.getAttribute("data-id");
+            const likeBtn = item.querySelector(".like-btn");
+            const likeCount = item.querySelector(".like-count");
+
+            const ref = doc(db, "likes", id);
+
+            // 🔹 Load count
+            async function loadLikes() {
+                const snap = await getDoc(ref);
+
+                if (snap.exists()) {
+                    likeCount.innerText = snap.data().count;
+                } else {
+                    await setDoc(ref, { count: 0 });
+                    likeCount.innerText = 0;
+                }
+            }
+
+            loadLikes();
+
+            // 🔹 Check local like
+            const likedKey = "liked_" + id;
+
+            if (localStorage.getItem(likedKey)) {
+                likeBtn.classList.remove("fa-regular");
+                likeBtn.classList.add("fa-solid", "liked");
+            } else {
+                likeBtn.classList.remove("fa-solid");
+                likeBtn.classList.add("fa-regular");
+            }
+
+            // 🔹 Click logic
+            likeBtn.addEventListener("click", async (e) => {
+                e.stopPropagation(); // 🔥 prevents lightbox trigger
+
+                let liked = localStorage.getItem(likedKey);
+
+                if (!liked) {
+                    // LIKE
+                    await updateDoc(ref, { count: increment(1) });
+                    localStorage.setItem(likedKey, "true");
+
+                    likeBtn.classList.remove("fa-regular");
+                    likeBtn.classList.add("fa-solid", "liked");
+                } else {
+                    // UNLIKE
+                    await updateDoc(ref, { count: increment(-1) });
+                    localStorage.removeItem(likedKey);
+
+                    likeBtn.classList.remove("fa-solid", "liked");
+                    likeBtn.classList.add("fa-regular");
+                }
+
+                // refresh count
+                const snap = await getDoc(ref);
+                likeCount.innerText = snap.data().count;
+            });
+
+        });
+
+    </script>
 </body>
 
 </html>
