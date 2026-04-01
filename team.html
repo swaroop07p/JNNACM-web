@@ -13,701 +13,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* This is the most important line */
-        }
-
-        html,
-        body {
-            width: 100%;
-            overflow-x: hidden;
-            /* Prevents horizontal scrolling */
-            position: relative;
-            scroll-behavior: smooth;
-            transition: background-color 0.4s ease;
-        }
-
-        /* =========================================
-           CSS VARIABLES & THEME SETUP
-           ========================================= */
-        :root {
-            /* Light Mode Default */
-            --bg-base: #e2e8f0;
-            /* slate-200 */
-            --text-main: #0f172a;
-            /* slate-900 */
-            --text-muted: #475569;
-            /* slate-600 */
-
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --nav-bg: rgba(255, 255, 255, 0.8);
-
-            --grid-color-1: rgba(20, 69, 231, 0.1);
-            --grid-color-2: rgba(20, 69, 231, 0.1);
-            --orb-1: rgba(20, 184, 166, 0.15);
-            /* Teal */
-            --orb-2: rgba(59, 130, 246, 0.15);
-            /* Blue */
-
-            --pulse-glow: rgba(20, 184, 166, 0.2);
-            --pulse-border: rgba(20, 184, 166, 0.3);
-        }
-
-        [data-theme="dark"] {
-            /* Dark Mode */
-            --bg-base: #0f172a;
-            /* slate-900 */
-            --text-main: #e2e8f0;
-            /* slate-200 */
-            --text-muted: #cbd5e1;
-            /* slate-300 */
-
-            --glass-bg: rgba(15, 23, 42, 0.8);
-            --glass-border: rgba(51, 65, 85, 0.5);
-            /* slate-700 */
-            --nav-bg: rgba(15, 23, 42, 0.8);
-
-            --grid-color-1: rgba(20, 184, 166, 0.15);
-            --grid-color-2: rgba(20, 184, 166, 0.15);
-            --orb-1: rgba(20, 184, 166, 0.25);
-            --orb-2: rgba(59, 130, 246, 0.25);
-        }
-
-        /* Nav Spotlight Colors */
-        .active-cyan {
-            --spot-color: #22d3ee;
-            --spot-glow: rgba(34, 211, 238, 0.5);
-        }
-
-        .active-fuchsia {
-            --spot-color: #e879f9;
-            --spot-glow: rgba(232, 121, 249, 0.5);
-        }
-
-        .active-purple {
-            --spot-color: #c084fc;
-            --spot-glow: rgba(192, 132, 252, 0.5);
-        }
-
-        .active-orange {
-            --spot-color: #fb923c;
-            --spot-glow: rgba(251, 146, 60, 0.5);
-        }
-
-        .active-lime {
-            --spot-color: #a3e635;
-            --spot-glow: rgba(163, 230, 53, 0.5);
-        }
-
-        .active-blue {
-            --spot-color: #60a5fa;
-            --spot-glow: rgba(96, 165, 250, 0.5);
-        }
-
-        .active-rose {
-            --spot-color: #fb7185;
-            --spot-glow: rgba(251, 113, 133, 0.5);
-        }
-
-        /* =========================================
-           GLOBAL RESET
-           ========================================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            /* transition: background-color 0.4s ease, border-color 0.4s ease; */
-        }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(20, 184, 166, 0.5);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(20, 184, 166, 0.8);
-        }
-
-        /* Utilities */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* =========================================
-           BACKGROUND: CYBER GRID & ORBS
-           ========================================= */
-        .animated-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -5;
-            pointer-events: none;
-            overflow: hidden;
-            background-image:
-                linear-gradient(var(--grid-color-1) 2px, transparent 2px),
-                linear-gradient(90deg, var(--grid-color-2) 2px, transparent 2px);
-            background-size: 40px 40px;
-            animation: pan-grid 8s linear infinite;
-        }
-
-        .animated-bg::before,
-        .animated-bg::after {
-            content: "";
-            position: absolute;
-            inset: -50%;
-            z-index: -6;
-            pointer-events: none;
-        }
-
-        .animated-bg::before {
-            background: radial-gradient(circle at 50% 50%, var(--orb-1), transparent 40%);
-            animation: float-orb-1 15s ease-in-out infinite alternate;
-        }
-
-        .animated-bg::after {
-            background: radial-gradient(circle at 50% 50%, var(--orb-2), transparent 50%);
-            animation: float-orb-2 20s ease-in-out infinite alternate;
-        }
-
-        @keyframes pan-grid {
-            from {
-                background-position: 0 0;
-            }
-
-            to {
-                background-position: 0 40px;
-            }
-        }
-
-        @keyframes float-orb-1 {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            100% {
-                transform: translate(20vw, 20vh) scale(1.5);
-            }
-        }
-
-        @keyframes float-orb-2 {
-            0% {
-                transform: translate(20vw, -10vh) scale(1.2);
-            }
-
-            100% {
-                transform: translate(-20vw, 20vh) scale(0.8);
-            }
-        }
-
-        /* =========================================
-           NAVBAR (PILL SHAPE & GLOW)
-           ========================================= */
-        .navbar-wrapper {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 1150px;
-            z-index: 100;
-        }
-
-        nav {
-            background: var(--nav-bg);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid var(--glass-border);
-            border-radius: 9999px;
-            /* Pill shape */
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            animation: pulse-border 1.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulse-border {
-            0% {
-                box-shadow: 0 0 15px var(--pulse-glow), inset 0 0 5px rgba(20, 184, 166, 0.1);
-                border-color: var(--pulse-border);
-            }
-
-            100% {
-                box-shadow: 0 0 25px rgba(20, 184, 166, 0.4), inset 0 0 10px rgba(20, 184, 166, 0.2);
-                border-color: rgba(20, 184, 166, 0.6);
-            }
-        }
-
-        .logo-box {
-            width: 96px;
-            height: 48px;
-            /* background: var(--bg-base); */
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(20, 184, 166, 0.4);
-            border: 1px solid rgba(20, 184, 166, 0.3);
-            margin-left: 4px;
-        }
-
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .logo-light {
-            display: block;
-        }
-
-        .logo-dark {
-            display: none;
-        }
-
-        [data-theme="dark"] .logo-light {
-            display: none;
-        }
-
-        [data-theme="dark"] .logo-dark {
-            display: block;
-        }
-
-        /* Desktop Links */
-        .nav-links {
-            display: none;
-            list-style: none;
-            gap: 4px;
-        }
-
-        @media (min-width: 768px) {
-            .nav-links {
-                display: flex;
-            }
-        }
-
-        .nav-link {
-            position: relative;
-            padding: 8px 16px;
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            transition: color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .nav-link:hover {
-            color: var(--text-main);
-        }
-
-        /* The Magic Spotlight Effect */
-        .spotlight-container {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 96px;
-            height: 48px;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-link.active .spotlight-container {
-            opacity: 1;
-        }
-
-        .nav-link.active {
-            color: var(--spot-color);
-        }
-
-        .spotlight-bar {
-            width: 48px;
-            height: 4px;
-            border-radius: 9999px;
-            background: var(--spot-color);
-            box-shadow: 0 0 8px var(--spot-color);
-        }
-
-        .spotlight-beam {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--spot-glow), transparent);
-            clip-path: polygon(35% 0, 65% 0, 100% 100%, 0% 100%);
-            opacity: 0.6;
-        }
-
-        /* Controls Area */
-        .controls-area {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 9999px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid var(--glass-border);
-        }
-
-        [data-theme="dark"] .controls-area {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .theme-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .theme-btn:hover {
-            background: var(--bg-base);
-            color: #eab308;
-            /* Yellow */
-            box-shadow: 0 0 5px rgba(250, 204, 21, 0.5);
-        }
-
-        /* Mobile Menu Button */
-        .mobile-toggle {
-            display: block;
-            background: var(--bg-base);
-            border: none;
-            width: 48px;
-            height: 28px;
-            border-radius: 9999px;
-            position: relative;
-            cursor: pointer;
-            padding: 4px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        @media (min-width: 768px) {
-            .mobile-toggle {
-                display: none;
-            }
-        }
-
-        .mobile-knob {
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: transform 0.4s ease, background-color 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-        }
-
-        [data-theme="dark"] .mobile-knob {
-            background: var(--text-muted);
-        }
-
-        .mobile-knob span {
-            width: 8px;
-            height: 1px;
-            background: #0f172a;
-        }
-
-        .mobile-toggle.is-open {
-            background: rgba(244, 63, 94, 0.2);
-        }
-
-        /* rose-500/20 */
-        .mobile-toggle.is-open .mobile-knob {
-            transform: translateX(20px) rotate(180deg);
-            background: #f43f5e;
-            /* rose-500 */
-        }
-
-        .mobile-toggle.is-open .mobile-knob span {
-            display: none;
-        }
-
-        .mobile-toggle.is-open .mobile-knob::after {
-            content: "\f00d";
-            /* FontAwesome X */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: white;
-            font-size: 10px;
-        }
-
-        /* Mobile Overlay Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-20px) scale(0.95);
-            width: 90%;
-            max-width: 350px;
-            border-radius: 24px;
-            padding: 20px;
-            z-index: 90;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 40px rgba(20, 184, 166, 0.2);
-            border: 1px solid rgba(20, 184, 166, 0.3);
-            display: flex;
-            /* Add this */
-            flex-direction: column;
-            /* Add this */
-            gap: 12px;
-        }
-
-        .mobile-menu.is-open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateX(-50%) translateY(0) scale(1);
-        }
-
-        .mobile-link {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 14px 20px;
-            border-radius: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-link i {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            transition: color 0.3s;
-        }
-
-        .mobile-link:hover {
-            background: var(--bg-base);
-            transform: translateX(8px);
-        }
-
-        /* Specific Mobile Gradients for Active states */
-        .mobile-link.active.active-cyan {
-            background: linear-gradient(to right, #06b6d4, #3b82f6);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-fuchsia {
-            background: linear-gradient(to right, #d946ef, #a855f7);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-purple {
-            background: linear-gradient(to right, #a855f7, #6366f1);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-orange {
-            background: linear-gradient(to right, #f97316, #ef4444);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-lime {
-            background: linear-gradient(to right, #84cc16, #22c55e);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-blue {
-            background: linear-gradient(to right, #3b82f6, #6366f1);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active.active-rose {
-            background: linear-gradient(to right, #f43f5e, #ec4899);
-            color: white;
-            transform: translateX(8px);
-        }
-
-        .mobile-link.active i {
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        /* =========================================
-           MAIN CONTENT
-           ========================================= */
-        main {
-            min-height: 100vh;
-            padding-top: 140px;
-            /* Offset for navbar */
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-inline: 5%;
-        }
-
-        /* =========================================
-           FOOTER (EXACT MATCH)
-           ========================================= */
-        footer {
-            margin-top: 80px;
-            border-top: 1px solid var(--glass-border);
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-content {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 32px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        @media (min-width: 768px) {
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-
-        .footer-text h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #2dd4bf, #3b82f6);
-            /* teal-400 to blue-500 */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-text p {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 16px;
-        }
-
-        .footer-social a {
-            padding: 8px;
-            border-radius: 9999px;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Specific Social Colors from React Code */
-        .soc-globe {
-            color: #0d9488;
-        }
-
-        /* teal-600 */
-        [data-theme="dark"] .soc-globe {
-            color: #2dd4bf;
-        }
-
-        /* teal-400 */
-        .soc-globe:hover {
-            background: rgba(20, 184, 166, 0.2);
-        }
-
-        .soc-insta {
-            color: #db2777;
-        }
-
-        /* pink-600 */
-        [data-theme="dark"] .soc-insta {
-            color: #f472b6;
-        }
-
-        /* pink-400 */
-        .soc-insta:hover {
-            background: rgba(236, 72, 153, 0.2);
-        }
-
-        .soc-linkedin {
-            color: #2563eb;
-        }
-
-        /* blue-600 */
-        [data-theme="dark"] .soc-linkedin {
-            color: #60a5fa;
-        }
-
-        /* blue-400 */
-        .soc-linkedin:hover {
-            background: rgba(59, 130, 246, 0.2);
-        }
-
-        .soc-twitter {
-            color: #1f2937;
-        }
-
-        /* gray-800 */
-        [data-theme="dark"] .soc-twitter {
-            color: #d1d5db;
-        }
-
-        /* gray-300 */
-        .soc-twitter:hover {
-            background: rgba(107, 114, 128, 0.2);
-        }
-
         /* =========================================
            TEAM PAGE SPECIFIC STYLES
            ========================================= */
 
-        /* Header & Size Controls */
         .team-header-container {
             display: flex;
             flex-direction: column;
@@ -768,17 +80,12 @@
 
         .size-btn.active {
             background: #14b8a6 !important;
-            /* Force the teal color */
             color: white !important;
-            /* Force text/icon to white */
             box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.3);
-            /* Prevent mobile browsers from applying a "gray" tap highlight */
             -webkit-tap-highlight-color: transparent;
-            /* Ensure opacity is full */
             opacity: 1;
         }
 
-        /* Optional: Add this to prevent the "stuck hover" look on mobile */
         @media (max-width: 768px) {
             .size-btn:not(.active) {
                 background: transparent !important;
@@ -786,20 +93,19 @@
             }
         }
 
-        /* Section Headings */
         .section-heading {
             font-size: 1.875rem;
             font-weight: 700;
             margin-bottom: 2rem;
             background: linear-gradient(to right, #2dd4bf, #3b82f6, #9333ea);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             border-bottom: 2px solid rgba(20, 184, 166, 0.3);
             padding-bottom: 0.75rem;
             display: inline-block;
         }
 
-        /* Dynamic Grid Layouts */
         .team-grid {
             display: grid;
             gap: 1.5rem;
@@ -807,7 +113,6 @@
             transition: all 0.5s ease;
         }
 
-        /* Large Grid */
         .team-grid[data-size="large"] {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
@@ -824,7 +129,6 @@
             }
         }
 
-        /* Medium Grid */
         .team-grid[data-size="medium"] {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -841,7 +145,6 @@
             }
         }
 
-        /* Small Grid */
         .team-grid[data-size="small"] {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -858,7 +161,6 @@
             }
         }
 
-        /* Team Card Base */
         .team-card {
             border-radius: 1.5rem;
             overflow: hidden;
@@ -875,7 +177,6 @@
             border-color: rgba(45, 212, 191, 0.5);
         }
 
-        /* Card Image Container */
         .card-img-wrapper {
             width: 100%;
             background: var(--bg-base);
@@ -907,7 +208,6 @@
             opacity: 1;
         }
 
-        /* Image Heights based on Grid Size */
         .team-grid[data-size="large"] .card-img-wrapper {
             height: 350px;
         }
@@ -920,7 +220,6 @@
             height: 128px;
         }
 
-        /* Card Info Section */
         .card-info {
             text-align: center;
             flex-grow: 1;
@@ -993,7 +292,6 @@
             margin-bottom: 0.75rem;
         }
 
-        /* Social Icons */
         .card-social {
             display: flex;
             justify-content: center;
@@ -1062,19 +360,14 @@
         .footer-social {
             display: flex;
             flex-direction: column;
-            /* Stacks links row and text vertically */
             align-items: center;
-            /* Centers everything */
             gap: 10px;
-            /* Space between icons and text */
             font-family: sans-serif;
         }
 
         .social-links-row {
             display: flex;
-            /* Keeps icons in a single horizontal line */
             gap: 20px;
-            /* Space between each icon */
         }
 
         .social-links-row a {
@@ -1226,7 +519,7 @@
             <div class="team-header-container">
                 <div class="header-text" style="text-align: center;">
                     <h1
-                        style="font-size: clamp(2.25rem, 5vw, 3rem); font-weight: 800; background: linear-gradient(to right, #14b8a6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">
+                        style="font-size: clamp(2.25rem, 5vw, 3rem); font-weight: 800; background: linear-gradient(to right, #14b8a6, #3b82f6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">
                         Meet The Team
                     </h1>
                     <p style="color: var(--text-muted); font-size: 1.125rem;">
@@ -1386,8 +679,8 @@
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Alice" alt="Alice Turing"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058141/vidhaat_m_chavalagi_-_Vidhaat_Chavalagi_phujmm.jpg"
+                                alt="Alice Turing" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1398,7 +691,8 @@
                             <div class="card-social">
                                 <a href="mailto:chavalagividhaat@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="http://www.linkedin.com/in/vidhaat-chavalagi-0ab239391" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="http://www.linkedin.com/in/vidhaat-chavalagi-0ab239391"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
                                 <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
@@ -1406,8 +700,8 @@
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Alice" alt="Alice Turing"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058128/anagha_-_Anagha_C_alhnki.png"
+                                alt="Alice Turing" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1418,16 +712,18 @@
                             <div class="card-social">
                                 <a href="mailto:anaghashekar03@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="#" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="www.linkedin.com/in/anagha-c-84b8152a5" class="social-link linkedin"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/_anagha.03?igsh=dWF0dDBwbzhqNzhj"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Alice" alt="Alice Turing"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058139/Shreya_pp_-_Shreya_R_Chittaragi_bw419j.jpg"
+                                alt="Alice Turing" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1438,16 +734,18 @@
                             <div class="card-social">
                                 <a href="mailto:shreyarchittaragi24@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/shreya-r-chittaragi-b1b28b353/" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/shreya_chittaragi/?hl=en" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/shreya-r-chittaragi-b1b28b353/"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/shreya_chittaragi/?hl=en"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Alice" alt="Alice Turing"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058131/IMG_20241004_234156_562_-_Thrishanth_H_S_siwujr.webp"
+                                alt="Alice Turing" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1458,16 +756,18 @@
                             <div class="card-social">
                                 <a href="mailto:thrishanthhs@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/thrishanth-hs21?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/hs.thrishanth/" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/thrishanth-hs21?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/hs.thrishanth/" class="social-link instagram"><i
+                                        class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Alice" alt="Alice Turing"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058141/Vinay_N_V_-_Vinay_NV_s7aoov.jpg"
+                                alt="Alice Turing" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1478,8 +778,32 @@
                             <div class="card-social">
                                 <a href="mailto:nv.vinay2005@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/vinay-nv-aiml" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/ig.vinaynv?igsh=MTZxbTB2ZXMybXNqMg==" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/vinay-nv-aiml" class="social-link linkedin"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/ig.vinaynv?igsh=MTZxbTB2ZXMybXNqMg=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058135/kaveri_-_Kaveri_zyo7t6.jpg"
+                                alt="Alice Turing" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Kaveri</h3>
+                                <p class="card-role">Joint Treasurer</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:kaveriwalikar23@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/kaveri-v-15115a299?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/kaverivwalikar544?igsh=YmlsYmFuamxxejhn"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1492,8 +816,8 @@
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775063360/WhatsApp_Image_2026-04-01_at_10.38.00_PM_ydpl7u.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1504,8 +828,10 @@
                             <div class="card-social">
                                 <a href="mailto:charlie@jnnce.ac.in" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/swaroop-p-55a198343" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/swaroop_p_07?igsh=MTYyaXcxcXZkMnNnZw==" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/swaroop-p-55a198343"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/swaroop_p_07?igsh=MTYyaXcxcXZkMnNnZw=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1532,8 +858,8 @@
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058139/Shreyas_A_-_Shreyas_A_oopovg.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1544,7 +870,8 @@
                             <div class="card-social">
                                 <a href="mailto:shreyasa625@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/shreyas-a-809814330" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.linkedin.com/in/shreyas-a-809814330"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
                                 <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
@@ -1552,28 +879,8 @@
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
-                            <div class="card-overlay"></div>
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <h3 class="card-name text-gradient-hero">Samson A G</h3>
-                                <p class="card-role">Social Media Team</p>
-                            </div>
-                            <div class="card-social">
-                                <a href="mailto:shreyasa625@gmail.com" class="social-link mail"><i
-                                        class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/shreyas-a-809814330" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-card team-card" data-aos="fade-up">
-                        <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058132/IMG_20250324_063842_-_Sinchana_k_cpsqwu.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1584,16 +891,18 @@
                             <div class="card-social">
                                 <a href="mailto:sinchanak235@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/sinchana-k-aa0834300?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/sxnch_k?igsh=MWhxZ3pmNm9tb3FkZQ==" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/sinchana-k-aa0834300?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/sxnch_k?igsh=MWhxZ3pmNm9tb3FkZQ=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058127/Amrutha_K_S_-_Amrutha_K_S_ssjhcb.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1604,36 +913,40 @@
                             <div class="card-social">
                                 <a href="mailto:reddysriramulu77@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/amrutha-k-s-43a483311?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/amriva_04?utm_source=qr&igsh=OWQ0cWxzeHpud2Uy" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/amrutha-k-s-43a483311?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/amriva_04?utm_source=qr&igsh=OWQ0cWxzeHpud2Uy"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775060254/WhatsApp_Image_2026-04-01_at_9.44.56_PM_1_sgclpa.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
                             <div>
-                                <h3 class="card-name text-gradient-hero">Shreyas A</h3>
+                                <h3 class="card-name text-gradient-hero">Samson A G</h3>
                                 <p class="card-role">Social Media Team</p>
                             </div>
                             <div class="card-social">
-                                <a href="mailto:shreyasa625@gmail.com" class="social-link mail"><i
+                                <a href="mailto:itzsamsonag@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/shreyas-a-809814330" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/samson-ag-2982a9363?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/its_samson_a_g?igsh=enkxYnhzeHlkaDBr"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058128/Dhanyashree_urs_-_Dhanya_Urs_gp7gvv.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1644,16 +957,38 @@
                             <div class="card-social">
                                 <a href="mailto:dhanyabt499@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/dhanyashreeurs?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/_dhanya_urs_?utm_source=qr&igsh=MXF4OHhsYmdnMHNsdg==" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/dhanyashreeurs?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/_dhanya_urs_?utm_source=qr&igsh=MXF4OHhsYmdnMHNsdg=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775061584/IMG_3094_-_G.S_Nagesh_Yadav_xlzxnx.jpg"
+                                alt="Charlie Code" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">G S Nagesh Yadav </h3>
+                                <p class="card-role">Design Team</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:nothomosapien2005@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="#" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058136/NANDAN_D_-_NANDAN_D_dxof7z.jpg"
+                                alt="Charlie Code" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
@@ -1664,28 +999,10 @@
                             <div class="card-social">
                                 <a href="mailto:nandannd0020@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/nandan-d-325396317" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://www.instagram.com/nandan_nd20?igsh=MWM5ZG5kNWlvdXBsMQ==" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-card team-card" data-aos="fade-up">
-                        <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Charlie" alt="Charlie Code"
-                                loading="lazy">
-                            <div class="card-overlay"></div>
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <h3 class="card-name text-gradient-hero">Shreyas A</h3>
-                                <p class="card-role">Design Team</p>
-                            </div>
-                            <div class="card-social">
-                                <a href="mailto:shreyasa625@gmail.com" class="social-link mail"><i
-                                        class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.linkedin.com/in/shreyas-a-809814330" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/nandan-d-325396317" class="social-link linkedin"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/nandan_nd20?igsh=MWM5ZG5kNWlvdXBsMQ=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1697,26 +1014,248 @@
                 <h2 class="section-heading" data-aos="fade-right">Management Committee</h2>
                 <div class="team-grid" data-size="medium">
 
+                    <!-- Seniors Team -->
                     <div class="glass-card team-card" data-aos="fade-up">
                         <div class="card-img-wrapper">
-                            <img src="https://via.placeholder.com/400x500/cbd5e1/475569?text=Frank" alt="Frank Event"
-                                loading="lazy">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058133/IMG_20260331_182401_-_M_Rohan_xqqnwc.jpg"
+                                alt="Frank Event" loading="lazy">
                             <div class="card-overlay"></div>
                         </div>
                         <div class="card-info">
                             <div>
-                                <h3 class="card-name text-gradient-hero">Frank Event</h3>
-                                <p class="card-role">Operations Head</p>
+                                <h3 class="card-name text-gradient-hero">M Rohan</h3>
+                                <p class="card-role">Event Manager</p>
                             </div>
                             <div class="card-social">
-                                <a href="mailto:frank@jnnce.ac.in" class="social-link mail"><i
+                                <a href="mailto:rohanm4753@gmail.com" class="social-link mail"><i
                                         class="fa-solid fa-envelope"></i></a>
-                                <a href="#" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.linkedin.com/in/m-rohan-9b5516350" class="social-link linkedin"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
                                 <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
 
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058140/Vathsala_S_H_-_vathsala_s_h_kfmjks.png"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Vathsala S H </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:vathsalash08062005@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="linkedin.com/in/vathsala-s-h-39a847361" class="social-link linkedin"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/vathsala_s_h?igsh=a25iMDJveThkMTBr"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058129/IMG-20260401-WA0005_-_Rajeshwari_H_M_e3mhpj.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Rajeshwari H M </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:hmrajeshwari15@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/rajeshwari-h-m-93b953361?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/raji__hm?igsh=MWFvZmpjNWk1ZnpucA=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058135/IMG_20260401_183509_-_Navami_N_cwldho.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Navami N </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:navamin2005@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/navami-n-9a926b373?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/__navami__n?igsh=Nmo3Y3pibzNidm9j"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058129/Disha_B_N_-_Disha_Gowda_ugxn6z.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Disha B N </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:dishangowda06@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/disha-gowda-970972299"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/__disha_gowda___?igsh=MWJhM21kMzd5ZHRhNQ=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775060253/WhatsApp_Image_2026-04-01_at_9.44.56_PM_gjia68.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Jeevan.H.G </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:hgjeeva1527@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/jeevan-h-g-a56360338?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/_jeevan_jeevu_?igsh=MXhvenl2Mjk1aXkxZg=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Juniors Team -->
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058128/Amogha_V_Raikar_-_Free_fire_Boy_eyuabj.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Amogha V Raikar </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:amoghavraikar75@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/amogha-raikar-71280a33b?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/amogharaikar____v?igsh=NzFqdGFub3B6Y3cw"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058136/manaswini_-_Manaswini_K_vgl0kf.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Manaswini Kommaraju </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:manaswiniraokommaraju@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/manaswini-k-464283353?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058137/PANNAGA_H_N_1_-_Pannaga_Nagaraj_m3kkoi.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">PANNAGA H N</h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:pannaga_aiml@jnnce.ac.in" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/pannaga-h-n-mayya-087461350?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/pannaga._.vasista_?igsh=YnF2MXR4MmtzMGFy"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058129/IMG-20260401-WA0004_uyrlyt.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Kushat K Chavan</h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:kushalkc2006@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="#" class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/kushal_10_chavan?igsh=OTdiZnI3aTlmMHpv"
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card team-card" data-aos="fade-up">
+                        <div class="card-img-wrapper">
+                            <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1775058130/IMG-20260401-WA0007_-_Shishir_SR_rhfcbp.jpg"
+                                alt="Frank Event" loading="lazy">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-info">
+                            <div>
+                                <h3 class="card-name text-gradient-hero">Shishir S R </h3>
+                                <p class="card-role">Event Manager</p>
+                            </div>
+                            <div class="card-social">
+                                <a href="mailto:shishirsr267@gmail.com" class="social-link mail"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.linkedin.com/in/shishir-sr-69a114372?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                    class="social-link linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/shishir_sheeryada?igsh=MW41N3Zyd3F6aWRyMQ=="
+                                    class="social-link instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1761,17 +1300,10 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // 1. Initialize Animations
         AOS.init({ duration: 800, offset: 50, once: true });
-
-        // 2. Dynamic Year for Footer
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        // 3. Theme Toggle Logic
         const themeBtn = document.getElementById('theme-toggle');
         const themeIcon = themeBtn.querySelector('i');
-
-        // Ensure dark mode is default based on your SCSS snippet style preferences
         let currentTheme = localStorage.getItem('theme') || 'dark';
 
         function applyTheme(theme) {
@@ -1791,8 +1323,6 @@
             localStorage.setItem('theme', currentTheme);
             applyTheme(currentTheme);
         });
-
-        // 4. Mobile Menu Logic
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -1800,25 +1330,18 @@
             mobileToggle.classList.toggle('is-open');
             mobileMenu.classList.toggle('is-open');
         });
-
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!mobileToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
                 mobileToggle.classList.remove('is-open');
                 mobileMenu.classList.remove('is-open');
             }
         });
-
-        // team page js
         document.addEventListener('DOMContentLoaded', () => {
             const sizeBtns = document.querySelectorAll('.size-btn');
             const teamGrids = document.querySelectorAll('.team-grid');
-
-            // 1. Initial Screen Size Check (Matches Faculty.jsx Logic)
             let currentSize = window.innerWidth >= 768 ? 'large' : 'medium';
 
             const updateGridSize = (newSize) => {
-                // Update active button state
                 sizeBtns.forEach(btn => {
                     if (btn.getAttribute('data-set-size') === newSize) {
                         btn.classList.add('active');
@@ -1826,17 +1349,11 @@
                         btn.classList.remove('active');
                     }
                 });
-
-                // Update data attribute on all grid containers
                 teamGrids.forEach(grid => {
                     grid.setAttribute('data-size', newSize);
                 });
             };
-
-            // Run initial setup
             updateGridSize(currentSize);
-
-            // 2. Button Click Listener
             sizeBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const targetSize = btn.getAttribute('data-set-size');
