@@ -51,7 +51,10 @@ const themeBtn = document.getElementById("theme-toggle");
 const themeIcon = themeBtn.querySelector("i");
 
 // Ensure dark mode is default based on your SCSS snippet style preferences
-let currentTheme = localStorage.getItem("theme") || "dark";
+const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+let currentTheme =
+  localStorage.getItem("theme") || (systemPrefersDark ? "dark" : "light");
 
 function applyTheme(theme) {
   if (theme === "dark") {
