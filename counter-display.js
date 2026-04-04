@@ -39,3 +39,64 @@ async function displayCountOnly() {
 }
 
 displayCountOnly();
+
+// 1. Initialize Animations
+AOS.init({ duration: 600, offset: 80, once: true });
+
+// 2. Dynamic Year for Footer
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// 3. Theme Toggle Logic
+const themeBtn = document.getElementById("theme-toggle");
+const themeIcon = themeBtn.querySelector("i");
+
+// Ensure dark mode is default based on your SCSS snippet style preferences
+let currentTheme = localStorage.getItem("theme") || "dark";
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.body.setAttribute("data-theme", "dark");
+    themeIcon.className = "ri-sun-line";
+  } else {
+    document.body.removeAttribute("data-theme");
+    themeIcon.className = "fa-solid fa-moon";
+  }
+}
+
+applyTheme(currentTheme);
+
+themeBtn.addEventListener("click", () => {
+  currentTheme = currentTheme === "dark" ? "light" : "dark";
+  localStorage.setItem("theme", currentTheme);
+  applyTheme(currentTheme);
+});
+
+// 4. Mobile Menu Logic
+const mobileToggle = document.getElementById("mobile-toggle");
+const mobileMenu = document.getElementById("mobile-menu");
+
+mobileToggle.addEventListener("click", () => {
+  mobileToggle.classList.toggle("is-open");
+  mobileMenu.classList.toggle("is-open");
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!mobileToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+    mobileToggle.classList.remove("is-open");
+    mobileMenu.classList.remove("is-open");
+  }
+});
+
+
+// For scroll progress
+document.addEventListener("scroll", () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+
+  const progress = scrollTop / scrollHeight;
+
+  document.documentElement.style.setProperty("--scroll-progress", progress);
+});

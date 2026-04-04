@@ -377,13 +377,71 @@
 
                     <div class="event-dual-images">
                         <div class="img-slot">
-                            <img src="/assets/images/Events/Debate Collision/Poster.jpeg"
-                                alt="Poster" loading="lazy">
+                            <img src="/assets/images/Events/Rangoli/poster.jpeg" alt="Poster" loading="lazy">
                             <i class="fa-regular fa-calendar fa-2x"></i><span
                                 style="margin-top: 8px; font-weight: 700;">Poster</span>
                         </div>
                         <div class="img-slot winner-slot">
                             <img src="" alt="Winners" loading="lazy">
+                            <i class="fa-solid fa-trophy fa-2x" style="color: #ca8a04;"></i><span
+                                style="margin-top: 8px; font-weight: 700; color: #ca8a04;">Winning Team</span>
+                        </div>
+                    </div>
+
+                    <div class="event-info">
+                        <h2 class="event-title text-gradient-hero">Rangoli Utsav</h2>
+                        <p class="event-date">1 April 2026</p>
+                        <p class="desc">Rangoli is a traditional Indian art form where colorful patterns are created on
+                            the ground using powders, flowers, or rice. It is commonly made during festivals like Diwali
+                            to welcome guests and bring good luck.
+                        </p>
+
+                        <a href="event-pages/Rangoli.html" class="btn-memories">
+                            View Memories <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card event-list-card" data-aos="flip-up">
+
+                    <div class="event-dual-images">
+                        <div class="img-slot">
+                            <img src="/assets/images/Events/FreeFire/poster.jpeg" alt="Poster" loading="lazy">
+                            <i class="fa-regular fa-calendar fa-2x"></i><span
+                                style="margin-top: 8px; font-weight: 700;">Poster</span>
+                        </div>
+                        <div class="img-slot winner-slot">
+                            <img src="" alt="Winners" loading="lazy">
+                            <i class="fa-solid fa-trophy fa-2x" style="color: #ca8a04;"></i><span
+                                style="margin-top: 8px; font-weight: 700; color: #ca8a04;">Winning Team</span>
+                        </div>
+                    </div>
+
+                    <div class="event-info">
+                        <h2 class="event-title text-gradient-hero">BOOYAH 2026 - FREE FIRE TOURNAMENT</h2>
+                        <p class="event-date">1 April 2026</p>
+                        <p class="desc">Free Fire is a popular mobile battle royale game where players are dropped onto
+                            an island and compete to be the last one standing. It features fast-paced gameplay, various
+                            weapons, characters with unique abilities, and team or solo modes.
+                        </p>
+
+                        <a href="event-pages/Free-fire.html" class="btn-memories">
+                            View Memories <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card event-list-card" data-aos="flip-up">
+
+                    <div class="event-dual-images">
+                        <div class="img-slot">
+                            <img src="/assets/images/Events/Debate Collision/Poster.jpeg" alt="Poster" loading="lazy">
+                            <i class="fa-regular fa-calendar fa-2x"></i><span
+                                style="margin-top: 8px; font-weight: 700;">Poster</span>
+                        </div>
+                        <div class="img-slot winner-slot">
+                            <img src="/assets/images/Events/Debate Collision/winners.jpeg" alt="Winners"
+                                loading="lazy">
                             <i class="fa-solid fa-trophy fa-2x" style="color: #ca8a04;"></i><span
                                 style="margin-top: 8px; font-weight: 700; color: #ca8a04;">Winning Team</span>
                         </div>
@@ -778,54 +836,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // 1. Initialize Animations
-        AOS.init({ duration: 600, offset: 80, once: true });
-
-        // 2. Dynamic Year for Footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // 3. Theme Toggle Logic
-        const themeBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeBtn.querySelector('i');
-
-        // Ensure dark mode is default based on your SCSS snippet style preferences
-        let currentTheme = localStorage.getItem('theme') || 'dark';
-
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.body.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'ri-sun-line';
-            } else {
-                document.body.removeAttribute('data-theme');
-                themeIcon.className = 'fa-solid fa-moon';
-            }
-        }
-
-        applyTheme(currentTheme);
-
-        themeBtn.addEventListener('click', () => {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('theme', currentTheme);
-            applyTheme(currentTheme);
-        });
-
-        // 4. Mobile Menu Logic
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileToggle.addEventListener('click', () => {
-            mobileToggle.classList.toggle('is-open');
-            mobileMenu.classList.toggle('is-open');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
-                mobileToggle.classList.remove('is-open');
-                mobileMenu.classList.remove('is-open');
-            }
-        });
-
         // Event content js
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('event-search');

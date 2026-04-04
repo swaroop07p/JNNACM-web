@@ -707,6 +707,36 @@
 
                 <div class="glass-card event-card">
                     <div class="event-poster">
+                        <img src="/assets/images/Events/Rangoli/poster.jpeg"
+                            alt="Volleyball" loading="lazy">
+                        <div class="event-poster-overlay"></div>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
+                        Rangoli Utsav
+                    </h3>
+                    <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
+                        Rangoli Utsav – AIML Dept Rangoli is a traditional Indian art form where colorful patterns are created on the ground using powders, flowers. Show your creativity & celebrate tradition with colors!
+                    </p>
+                    <a href="https://forms.gle/RqBVCzhmztnNvWri9" target="_blank" class="event-btn">Register Now</a>
+                </div>
+
+                <div class="glass-card event-card">
+                    <div class="event-poster">
+                        <img src="/assets/images/Events/FreeFire/poster.jpeg"
+                            alt="Batminton" loading="lazy">
+                        <div class="event-poster-overlay"></div>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
+                        BOOYAH 2026 - FREE FIRE TOURNAMENT
+                    </h3>
+                    <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
+                        BOOYAH 2026 - FREE FIRE TOURNAMENT " Organized by Department of AIML Step into the battlefield where every second counts! Drop in, gear up, outplay your enemies, and fight your way to victory in Garena Free Fire.
+                    </p>
+                    <a href="https://forms.gle/mDydQfDDcwvMcpYG7" target="_blank" class="event-btn">Register Now</a>
+                </div>
+
+                <div class="glass-card event-card">
+                    <div class="event-poster">
                         <img src="/assets/images/Events/Debate Collision/Poster.jpeg" alt="Throwball" loading="lazy">
                         <div class="event-poster-overlay"></div>
                     </div>
@@ -736,43 +766,6 @@
                         Get ready for an exciting showdown on the pitch! Strategy, teamwork, and thrilling action await!
                     </p>
                     <a href="https://forms.gle/D4W7KGGRuZ6aX8uk8" target="_blank" class="event-btn">Register Now</a>
-                </div>
-
-                <div class="glass-card event-card">
-                    <div class="event-poster">
-                        <img src="/assets/images/Events/Volleyball/WhatsApp Image 2026-03-26 at 5.37.46 PM.jpeg"
-                            alt="Volleyball" loading="lazy">
-                        <div class="event-poster-overlay"></div>
-                    </div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
-                        Volley-Ball
-                    </h3>
-                    <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
-                        VOLLEYBALL VORTEX 2026
-                        Organized by Department of AI & ML, JNNCE
-                        Gear up for an action-packed volleyball showdown! Bring your team, show your skills, and
-                        dominate the court!
-                    </p>
-                    <a href="https://forms.gle/KgZcARRzdnaRyxA57" target="_blank" class="event-btn">Register Now</a>
-                </div>
-
-                <div class="glass-card event-card">
-                    <div class="event-poster">
-                        <img src="/assets/images/Events/Batminton/WhatsApp Image 2026-03-26 at 5.37.46 PM (1).jpeg"
-                            alt="Batminton" loading="lazy">
-                        <div class="event-poster-overlay"></div>
-                    </div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
-                        Smash Arena
-                    </h3>
-                    <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
-                        SMASH ARENA 2026
-                        Organized by the Department of AI & ML
-                        Jawaharlal Nehru New College of Engineering, Shivamogga
-                        Step onto the court and unleash your power! Precision, speed, and skill will decide the
-                        champion!.
-                    </p>
-                    <a href="https://forms.gle/88sxQ9dUVnJ3UWjg8" target="_blank" class="event-btn">Register Now</a>
                 </div>
 
             </div>
@@ -821,54 +814,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // 1. Initialize Animations
-        AOS.init({ duration: 600, offset: 80, once: true });
-
-        // 2. Dynamic Year for Footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // 3. Theme Toggle Logic
-        const themeBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeBtn.querySelector('i');
-
-        // Ensure dark mode is default based on your SCSS snippet style preferences
-        let currentTheme = localStorage.getItem('theme') || 'dark';
-
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.body.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'ri-sun-line';
-            } else {
-                document.body.removeAttribute('data-theme');
-                themeIcon.className = 'fa-solid fa-moon';
-            }
-        }
-
-        applyTheme(currentTheme);
-
-        themeBtn.addEventListener('click', () => {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('theme', currentTheme);
-            applyTheme(currentTheme);
-        });
-
-        // 4. Mobile Menu Logic
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileToggle.addEventListener('click', () => {
-            mobileToggle.classList.toggle('is-open');
-            mobileMenu.classList.toggle('is-open');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
-                mobileToggle.classList.remove('is-open');
-                mobileMenu.classList.remove('is-open');
-            }
-        });
-
         // 5. Home Page Specific Logic (GSAP & Scrolling)
         if (typeof gsap !== 'undefined') {
             gsap.fromTo(

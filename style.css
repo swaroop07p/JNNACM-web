@@ -690,3 +690,28 @@ footer {
 .soc-twitter:hover {
     background: rgba(107, 114, 128, 0.2);
 }
+
+
+/* Global scroll progress bar */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  z-index: 9999;
+
+  background: linear-gradient(
+    to right,
+    #2dd4bf,
+    #3b82f6,
+    #9333ea
+  );
+
+  transform-origin: left;
+  transform: scaleX(var(--scroll-progress, 0));
+  transition: transform 0.1s linear;
+
+  will-change: transform;
+}
