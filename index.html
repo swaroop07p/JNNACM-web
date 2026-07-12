@@ -516,10 +516,310 @@
             will-change: transform;
             /* transform: translateZ(0); */
         }
+
+        /* =========================================
+           SWIPEABLE HIGHLIGHTS CAROUSEL
+           ========================================= */
+        .welcome-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(49, 46, 46, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 1rem;
+        }
+
+        .welcome-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .carousel-wrapper {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .carousel-card {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-radius: 1rem;
+            background: var(--nav-bg);
+            /* Glassmorphism support */
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.5rem;
+        }
+
+        .carousel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Bubble Indicators */
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-main);
+            opacity: 0.2;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            opacity: 0.8;
+            transform: scale(1.2);
+        }
+
+        [data-theme="dark"] .carousel-dot {
+            background: #ffffff;
+            opacity: 0.3;
+        }
+
+        [data-theme="dark"] .carousel-dot.active {
+            opacity: 1;
+        }
+
+        /* Swipeable Track */
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            gap: 1rem;
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.05);
+            /* Laptop Swipe Cursors */
+            cursor: grab;
+        }
+
+        .carousel-track:active,
+        .carousel-track.is-dragging {
+            cursor: grabbing;
+            scroll-snap-type: none;
+            /* Disable snap while dragging for smoothness */
+        }
+
+        [data-theme="dark"] .carousel-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Image Sizing (A4 Landscape Ratio) */
+        .carousel-img {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            width: 100%;
+            aspect-ratio: 297 / 210;
+            object-fit: contain;
+            border-radius: 1rem;
+            pointer-events: none;
+            /* Prevents image ghost-dragging on laptop */
+        }
+
+        /* Bottom Controls (Swipe Hint & Close) */
+        .carousel-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0rem;
+        }
+
+        .swipe-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .btn-close-modal {
+            padding: 0.75rem 2.5rem;
+            background: var(--text-main);
+            color: var(--bg-base);
+            font-weight: 700;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-close-modal:hover {
+            background: #14b8a6;
+            /* teal-500 */
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Laptop Specific Sizing & Margins */
+        @media (min-width: 768px) {
+            .welcome-modal {
+                /* Increases the top and bottom margins (padding of the overlay) */
+                padding: 4rem 2rem;
+            }
+
+            .carousel-wrapper {
+                /* Reduce this value to shrink the overall size of the card on laptops */
+                /* Try 600px or 700px to see what fits your screen best */
+                max-width: 650px;
+            }
+        }
+
+        /* Container styling to ensure alignment */
+        .swipe-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: sans-serif;
+            /* Replace with your project's font */
+            /* color: #666; */
+            /* Subtle professional text color */
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+
+        /* Base styles for the arrows */
+        .swipe-hint i {
+            font-size: 16px;
+            display: inline-block;
+            will-change: transform;
+        }
+
+        /* Apply professional subtle animations */
+        .swipe-hint .fa-arrow-left-long {
+            animation: nudgeLeft 2s ease-in-out infinite;
+        }
+
+        .swipe-hint .fa-arrow-right-long {
+            animation: nudgeRight 2s ease-in-out infinite;
+        }
+
+        /* Keyframes for the left arrow (slides left and fades slightly) */
+        @keyframes nudgeLeft {
+
+            0%,
+            100% {
+                transform: translateX(0);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateX(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* Keyframes for the right arrow (slides right and fades slightly) */
+        @keyframes nudgeRight {
+
+            0%,
+            100% {
+                transform: translateX(0);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateX(6px);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Welcome Highlights Modal -->
+    <!-- The 'active' class makes it visible on load -->
+    <div class="welcome-modal active" id="welcome-modal">
+        <div class="carousel-wrapper">
+            <div class="glass-card carousel-card navbar-glow">
+
+                <!-- Header & Bubbles -->
+                <div class="carousel-header">
+                    <h2 class="carousel-title">Hey There!!<br>
+                        <span class="text-gradient-hero">Glimps of AIML 2K26 Validictory Event</span>
+                    </h2>
+                    <div class="carousel-dots" id="carousel-indicators">
+                        <span class="carousel-dot active"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                    </div>
+                </div>
+
+                <!-- Swipeable Images -->
+                <div class="carousel-track" id="image-carousel">
+                    <!-- Image 1 -->
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1783855306/1_uq39nq.png"
+                        alt="Highlight 1" class="carousel-img">
+                    <!-- Image 2 -->
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1783855308/3_am4f5o.png"
+                        alt="Highlight 2" class="carousel-img">
+                    <!-- Image 3 -->
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1783855307/4_q6vha5.png"
+                        alt="Highlight 3" class="carousel-img">
+                    <!-- Image 4 -->
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1783855311/5_jgr8q4.png"
+                        alt="Highlight 4" class="carousel-img">
+                    <!-- Image 5 -->
+                    <img src="https://res.cloudinary.com/dsojrrb9j/image/upload/v1783855305/2_ljyrco.png"
+                        alt="Highlight 5" class="carousel-img">
+                </div>
+
+                <!-- Footer Controls -->
+                <div class="carousel-footer">
+                    <div class="swipe-hint">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                        <span>Swipe</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                    <button class="btn-close-modal" id="close-welcome-modal">
+                        Close & Continue
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="animated-bg"></div>
 
@@ -713,7 +1013,9 @@
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" class="text-gradient-hero">
                         TECH RELAY</h3>
                     <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
-                        Get ready to test your technical skills, teamwork, and speed in an exciting relay-style competition where every round brings a new challenge! Showcase your problem-solving abilities Compete with enthusiasm and team spirit Relay your skills towards victory.
+                        Get ready to test your technical skills, teamwork, and speed in an exciting relay-style
+                        competition where every round brings a new challenge! Showcase your problem-solving abilities
+                        Compete with enthusiasm and team spirit Relay your skills towards victory.
                     </p>
                     <a href="https://forms.gle/Ga9qFx8VmzNHCyM78" target="_blank" class="event-btn">Register Now</a>
                 </div>
@@ -727,7 +1029,9 @@
                         MOTION MATRIX
                     </h3>
                     <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
-                        Step into a dynamic world where creativity meets motion! Capture powerful stories through video and bring your vision to life.Showcase your videography and storytelling skills Let your visuals create impact and awareness.
+                        Step into a dynamic world where creativity meets motion! Capture powerful stories through video
+                        and bring your vision to life.Showcase your videography and storytelling skills Let your visuals
+                        create impact and awareness.
                     </p>
                     <a href="https://forms.gle/9vsLvPYUakhr4XPS8" target="_blank" class="event-btn">Register Now</a>
                 </div>
@@ -741,7 +1045,9 @@
                         PIXEL ODYSSEY
                     </h3>
                     <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex-grow: 1;">
-                        Step into a world where creativity meets perspective! Capture the beauty of nature through your lens and tell a powerful story.Showcase your photography skills and creativity Capture moments that reflect nature, sustainability, and life
+                        Step into a world where creativity meets perspective! Capture the beauty of nature through your
+                        lens and tell a powerful story.Showcase your photography skills and creativity Capture moments
+                        that reflect nature, sustainability, and life
                     </p>
                     <a href="https://forms.gle/CdtcrovAnkcmzmsW7" target="_blank" class="event-btn">Register Now</a>
                 </div>
@@ -820,6 +1126,143 @@
         if (scrollBtn) {
             scrollBtn.addEventListener('click', () => {
                 document.getElementById('upcoming-events').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // 6. Welcome Modal & Carousel Logic
+        const welcomeModal = document.getElementById('welcome-modal');
+        const closeBtn = document.getElementById('close-welcome-modal');
+        const track = document.getElementById('image-carousel');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        // Close Modal Logic
+        if (closeBtn && welcomeModal) {
+            closeBtn.addEventListener('click', () => {
+                welcomeModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling on the main page
+            });
+
+            // Optional: Close if clicking outside the card
+            welcomeModal.addEventListener('click', (e) => {
+                if (e.target === welcomeModal) {
+                    welcomeModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Prevent body scroll while modal is open
+            if (welcomeModal.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        if (track && dots.length > 0) {
+            const totalOriginalItems = dots.length;
+
+            // 1. Create clones for seamless looping
+            const children = Array.from(track.children);
+            const firstClone = children[0].cloneNode(true);
+            const lastClone = children[children.length - 1].cloneNode(true);
+
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, children[0]);
+
+            // 2. Set initial scroll position to the first real image
+            const initPosition = () => {
+                track.scrollLeft = track.clientWidth;
+            };
+            initPosition();
+            window.addEventListener('resize', initPosition);
+
+            // Helper function to handle seamless boundary jumping cleanly
+            const checkBoundaryAndJump = () => {
+                const scrollLeft = track.scrollLeft;
+                const width = track.clientWidth;
+
+                // Use a small tolerance margin to account for sub-pixel scrolling precision
+                if (scrollLeft <= 0.5) {
+                    track.scrollLeft = width * totalOriginalItems;
+                } else if (scrollLeft >= width * (totalOriginalItems + 0.5)) {
+                    track.scrollLeft = width;
+                }
+            };
+
+            // Bubble Sync on Scroll (Only handles dot updates and live dragging loops)
+            track.addEventListener('scroll', () => {
+                const width = track.clientWidth;
+
+                // While dragging, allow instant boundary jumps for an infinite feel
+                if (track.classList.contains('is-dragging')) {
+                    checkBoundaryAndJump();
+                }
+
+                // Calculate current active dot index safely
+                let index = Math.round(track.scrollLeft / width) - 1;
+                index = (index + totalOriginalItems) % totalOriginalItems;
+
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            });
+
+            // Handle boundary correction AFTER smooth snapping finishes to prevent vibration
+            if ('onscrollend' in window) {
+                track.addEventListener('scrollend', checkBoundaryAndJump);
+            } else {
+                // Fallback for older browsers without native scrollend support
+                let scrollTimeout;
+                track.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(checkBoundaryAndJump, 100);
+                });
+            }
+
+            // Laptop Click-and-Drag to Swipe Logic
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            track.addEventListener('mousedown', (e) => {
+                isDown = true;
+                track.classList.add('is-dragging');
+                startX = e.pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            });
+
+            track.addEventListener('mouseleave', () => {
+                if (!isDown) return;
+                isDown = false;
+                track.classList.remove('is-dragging');
+
+                const index = Math.round(track.scrollLeft / track.clientWidth);
+                track.scrollTo({
+                    left: index * track.clientWidth,
+                    behavior: 'smooth'
+                });
+            });
+
+            track.addEventListener('mouseup', () => {
+                isDown = false;
+                track.classList.remove('is-dragging');
+
+                // Snap to nearest image when mouse is released
+                const index = Math.round(track.scrollLeft / track.clientWidth);
+                track.scrollTo({
+                    left: index * track.clientWidth,
+                    behavior: 'smooth'
+                });
+            });
+
+            track.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - track.offsetLeft;
+                const walk = (x - startX) * 1.5; // Scroll speed multiplier
+                track.scrollLeft = scrollLeft - walk;
             });
         }
     </script>
