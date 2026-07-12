@@ -134,3 +134,27 @@ document.addEventListener("scroll", () => {
 
   document.documentElement.style.setProperty("--scroll-progress", progress);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const backToTopBtn = document.getElementById('backToTop');
+
+  if (backToTopBtn) {
+      // 1. Monitor scrolling activity to toggle visibility
+      window.addEventListener('scroll', () => {
+          // Button becomes visible after scrolling down 300px
+          if (window.scrollY > 300) {
+              backToTopBtn.classList.add('show');
+          } else {
+              backToTopBtn.classList.remove('show');
+          }
+      });
+
+      // 2. Smoothly scroll to top on user click
+      backToTopBtn.addEventListener('click', () => {
+          window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+          });
+      });
+  }
+});
