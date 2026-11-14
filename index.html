@@ -1265,7 +1265,7 @@
                 if (!isDown) return;
                 e.preventDefault();
                 const x = e.pageX - track.offsetLeft;
-                const walk = (x - startX) * 1.5; // Scroll speed multiplier
+                const walk = (x - startX) * 1.5; // Scroll speed multiplier (and testing for git)
                 track.scrollLeft = scrollLeft - walk;
             });
         }
